@@ -17,13 +17,21 @@ def import_data(file):
 def verify(hash1, hash2=False, hash3=False, read=None):
     if hash1 and not hash2 and not hash3:
         lines = read[0, 9999]
+        for line in lines:
+            print(line)
+            pass
         pass
     elif hash1 and hash2 and not hash3:
         lines = read[10000, 19999]
+        for line in lines:
+            print(line)
+            pass
         pass
 
     elif hash1 and hash2 and hash3:
         lines = read[20000, 29999]
+        for line in lines:
+            print(line)
         pass
     else:
         pass
@@ -95,7 +103,7 @@ def hash_3(data, new):
     return True
 
 
-with open('hashpasswords.txt', 'w') as new:
+with open('hashpasswords.txt', 'r+') as new:
     with open('passwords.txt') as file:
         if __name__ == '__main__':
             counter = 0
