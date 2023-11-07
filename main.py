@@ -14,30 +14,28 @@ def import_data(file):
 
 # Multiplication hash from geeksforgeeks
 # https://www.geeksforgeeks.org/hash-functions-and-list-types-of-hash-functions/
-def hash_1(data):
-    hash = 0
+# Caclulates a hash value using multiplication. The hash value starts at 1 to prevent a zero collision.
+def hash_1(data, new):
+    hash = 1
     for line in data:
+        hashv = 0
         for char in line:
             print(char)
             if char.isalpha():
                 hashv = ord(char)
-                hashv = hashv * hash
+
             elif char.isdigit():
                 hashv = int(char)
-            else:
-                raise Exception("Invalid data type.")
-        hashv = hashv * hash
+        hash *= hashv
         new.write(str(hash))
         print(hash)
         new.write('\n')
-        hash = 0
-
-    return
+        hash = 1
 
 
 # Addition hash from geeksforgeeks.
 # https://www.geeksforgeeks.org/hash-functions-and-list-types-of-hash-functions/
-def hash_2(data):
+def hash_2(data, new):
     hash = 0
     for line in data:
         for char in line:
@@ -53,7 +51,7 @@ def hash_2(data):
     pass
 
 
-def hash_3(data):
+def hash_3(data, new):
     pass
 
 
@@ -62,8 +60,8 @@ with open('hashpasswords.txt', 'w') as new:
         if __name__ == '__main__':
             counter = 0
             data = import_data(file)
-            hash_1(data)
-            hash_2(data)
-            hash_3(data)
+            hash_1(data, new)
+            hash_2(data, new)
+            hash_3(data, new)
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
