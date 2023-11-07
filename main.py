@@ -8,8 +8,7 @@ def import_data(file):
     table = {}
     for line in file.readlines():
         table[line] = True
-    results = table
-    return results
+    return table
 
 
 # verifies hashes and checks to see if they are all completed.
@@ -106,6 +105,7 @@ def hash_3(data, new):
 with open('hashpasswords.txt', 'r+') as new:
     with open('passwords.txt') as file:
         if __name__ == '__main__':
+            new.truncate(0)
             counter = 0
             data = import_data(file)
             hash_done = hash_1(data, new)
