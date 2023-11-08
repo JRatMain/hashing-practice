@@ -130,5 +130,3 @@ with (open('hashpasswords.txt', 'r+') as new,
         verify(table, hash_done, hash2_done, False)
         hash3_done, table = hash_3(data, new)
         verify(table, hash_done, hash2_done, hash3_done)
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
