@@ -13,25 +13,25 @@ def import_data(file):
 
 # verifies hashes and checks to see if they are all completed.
 # hash2 and hash3 are false by default.
-def verify(hash1, hash2=False, hash3=False, read=None):
+def verify(table, hash1, hash2=False, hash3=False, read=None):
     collisions = {}
 
     if hash1 and not hash2 and not hash3:
-        for line in read[0:9999]:
-            if line in collisions:
+        for line in table:
+            if line in collisions[0:9999]:
                 collisions[line] += 1
             else:
                 collisions[line] = 1
 
     if hash2:
-        for line in read[10000:19999]:
+        for line in table[10000:19999]:
             if line in collisions:
                 collisions[line] += 1
             else:
                 collisions[line] = 1
 
     if hash3:
-        for line in read[20000:29999]:
+        for line in table[20000:29999]:
             if line in collisions:
                 collisions[line] += 1
             else:
@@ -111,10 +111,10 @@ with (open('hashpasswords.txt', 'r+') as new,
         data = import_data(file)
         hash_done = hash_1(data, new)
         reader = new.readline(10000)
-        verify(hash_done, False, False, reader)
+        verify(data, hash_done, False, False, reader)
         hash2_done = hash_2(data, new)
-        verify(hash_done, hash2_done, False, reader)
+        verify(data, hash_done, hash2_done, False, reader)
         hash3_done = hash_3(data, new)
-        verify(hash_done, hash2_done, hash3_done, reader)
+        verify(data, hash_done, hash2_done, hash3_done, reader)
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
