@@ -1,3 +1,4 @@
+from tabulate import tabulate
 '''
 Hashing Lab 5
 Matthew Vrbka
@@ -15,23 +16,22 @@ def import_data(file):
 # verifies hashes and checks to see if they are all completed.
 # hash2 and hash3 are false by default.
 def verify(table, hash1, hash2=False, hash3=False):
-    collisions = {}
-
     if hash1 and not hash2 and not hash3:
-        for line in table.items():
-            print(line)
-
+        print('Displaying results for hash 1:')
+        print()
     elif hash2 and not hash3:
-        for line in table.items():
-            print(line)
-
+        print('Displaying results for hash 2:')
+        print()
     elif hash3:
-        for line in table.items():
-            print(line)
-    for hash_value, count in collisions.items():
-        print(f"Collision count for {hash_value}: {count}")
-    for line in collisions:
-        print(line)
+        print('Displaying results for hash 3:')
+        print()
+    print('Collision Count              ' + 'Hash Number')
+    for count, hash in table.items():
+
+        print(str(count) + '                            '
+              + str(hash))
+
+
 
 
 # Multiplication hash concept from geeksforgeeks
@@ -108,11 +108,12 @@ def hash_3(data, new):
         new.write('\n')
         if hash not in hashvals:
             key = 1
-            hashvals[key] = hash
+            hashvals[key] = abs(hash)
         else:
             key = hashvals.get(hash) + 1
-            hashvals[key] = hash
+            hashvals[key] = abs(hash)
         hash = 0
+
     print('DONE')
     return True, hashvals
 
