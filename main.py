@@ -1,4 +1,3 @@
-
 '''
 Hashing Lab 5
 Matthew Vrbka
@@ -27,11 +26,8 @@ def verify(table, hash1, hash2=False, hash3=False):
         print()
     print('Collision Count              ' + 'Hash Number')
     for count, hash in table.items():
-
         print(str(count) + '                            '
               + str(hash))
-
-
 
 
 # Multiplication hash concept from geeksforgeeks
