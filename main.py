@@ -1,4 +1,4 @@
-from tabulate import tabulate
+
 '''
 Hashing Lab 5
 Matthew Vrbka
