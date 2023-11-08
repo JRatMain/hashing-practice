@@ -14,29 +14,32 @@ def import_data(file):
 # verifies hashes and checks to see if they are all completed.
 # hash2 and hash3 are false by default.
 def verify(hash1, hash2=False, hash3=False, read=None):
+    collisions = {}
+
     if hash1 and not hash2 and not hash3:
-        lines = read[0, 9999]
-        for line in lines:
-            print(line)
-            pass
-        pass
-    elif hash1 and hash2 and not hash3:
-        lines = read[10000, 19999]
-        for line in lines:
-            print(line)
-            pass
-        pass
+        for line in read[0:9999]:
+            if line in collisions:
+                collisions[line] += 1
+            else:
+                collisions[line] = 1
 
-    elif hash1 and hash2 and hash3:
-        lines = read[20000, 29999]
-        for line in lines:
-            print(line)
-        pass
-    else:
-        pass
-        raise Exception("Looks like the program did an oopsie! Try running it again.")
+    if hash2:
+        for line in read[10000:19999]:
+            if line in collisions:
+                collisions[line] += 1
+            else:
+                collisions[line] = 1
 
-    pass
+    if hash3:
+        for line in read[20000:29999]:
+            if line in collisions:
+                collisions[line] += 1
+            else:
+                collisions[line] = 1
+    for line in collisions:
+        print(line)
+    for hash_value, count in collisions:
+        print(f"Collision count for {hash_value}: {count}")
 
 
 # Multiplication hash from geeksforgeeks
@@ -48,7 +51,6 @@ def hash_1(data, new):
     for line in data:
         hashv = 0
         for char in line:
-            print(char)
             if char.isalpha():
                 hashv = ord(char)
 
@@ -95,25 +97,24 @@ def hash_3(data, new):
                 hashval = int(char)
             hash -= hashval
         new.write(str(hash))
-        print(hash)
         new.write('\n')
         hash = 0
     print('DONE')
     return True
 
 
-with open('hashpasswords.txt', 'r+') as new:
-    with open('passwords.txt') as file:
-        if __name__ == '__main__':
-            new.truncate(0)
-            counter = 0
-            data = import_data(file)
-            hash_done = hash_1(data, new)
-            reader = new.readlines()
-            verify(hash_done, False, False, reader)
-            hash2_done = hash_2(data, new)
-            verify(hash_done, hash2_done, False, reader)
-            hash3_done = hash_3(data, new)
-            verify(hash_done, hash2_done, hash3_done, reader)
+with (open('hashpasswords.txt', 'r+') as new,
+      open('passwords.txt') as file):
+    if __name__ == '__main__':
+        new.truncate(0)
+        counter = 0
+        data = import_data(file)
+        hash_done = hash_1(data, new)
+        reader = new.readline(10000)
+        verify(hash_done, False, False, reader)
+        hash2_done = hash_2(data, new)
+        verify(hash_done, hash2_done, False, reader)
+        hash3_done = hash_3(data, new)
+        verify(hash_done, hash2_done, hash3_done, reader)
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
