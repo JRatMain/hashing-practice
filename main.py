@@ -4,6 +4,7 @@ Matthew Vrbka
 '''
 
 
+# Reads data from the file, trimming the \n before adding it to the table.
 def import_data(file):
     table = {}
     for line in file.readlines():
@@ -13,6 +14,7 @@ def import_data(file):
 
 
 # verifies hashes and checks to see if they are all completed.
+# it also displays collisions that are detected from each table.
 # hash2 and hash3 are false by default.
 def verify(table, hash1, hash2=False, hash3=False):
     if hash1 and not hash2 and not hash3:
@@ -33,6 +35,7 @@ def verify(table, hash1, hash2=False, hash3=False):
 # Multiplication hash concept from geeksforgeeks
 # https://www.geeksforgeeks.org/hash-functions-and-list-types-of-hash-functions/
 # Caclulates a hash value using multiplication. The hash value starts at 1 to prevent a zero collision.
+# If it were zero, every value would be zero as a result.
 def hash_1(data, new):
     print('Hashing dataset with first function... ')
     hash = 1
@@ -58,8 +61,7 @@ def hash_1(data, new):
     return True, hashvals
 
 
-# Addition hash from geeksforgeeks.
-# https://www.geeksforgeeks.org/hash-functions-and-list-types-of-hash-functions/
+# Uses an addition-based hash to hash each password, returning true once it is finished
 def hash_2(data, new):
     print('Hashing dataset with second function... ')
     hash = 0
@@ -84,9 +86,8 @@ def hash_2(data, new):
     return True, hashvals
 
 
-# Subtraction hash from geeks for geeks
-# It uses the absolute value of the hash value generated to place it into the table.
-# https://www.geeksforgeeks.org/hash-functions-and-list-types-of-hash-functions/
+# It uses the absolute value of the hash value generated to place it into the table,
+# as without it, it wouldn't be in the table.
 def hash_3(data, new):
     hashvals = {}
     print('Hashing dataset with third function...')
@@ -114,6 +115,9 @@ def hash_3(data, new):
     return True, hashvals
 
 
+# Main function. It opens two files, only reading from passwords but freely writing
+# to hashpasswords - passwords that have been hashed. The first thing it does is truncate
+# hashpassowords to the first line, deleting every value in it.
 with (open('hashpasswords.txt', 'r+') as new,
       open('passwords.txt') as file):
     if __name__ == '__main__':
